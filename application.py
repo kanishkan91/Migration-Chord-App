@@ -19,9 +19,9 @@ data=DataStore()
 
 
 
-@app.route("/main",methods=["GET","POST"])
+@application.route("/main",methods=["GET","POST"])
 
-@app.route("/",methods=["GET","POST"])
+@application.route("/",methods=["GET","POST"])
 def homepage():
     #CountryName = request.form.get('Country_field','India')
     #print(CountryName)
@@ -54,13 +54,13 @@ def homepage():
     return render_template("try2.html")
 
 
-@app.route("/get-data",methods=["GET","POST"])
+@application.route("/get-data",methods=["GET","POST"])
 def returnMigData():
     d=data.Prod
     return ((jsonify(d)))
 # export the final result to a json file
 
-@app.route("/get-Africa-Data",methods=["GET","POST"])
+@application.route("/get-Africa-Data",methods=["GET","POST"])
 def returnAfricaData():
     a=data.Africa
     return ((jsonify(a)))
