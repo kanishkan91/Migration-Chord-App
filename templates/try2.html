@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset=utf-8>
+	<title>Global international migration flows | Wittgenstein Centre</title>
+	<meta name=description content="Global Migration Data Sheet 2013: Unique estimates of migration flows between the top 50 sending and receiving countries.">
+	<meta name=viewport content="width=device-width, initial-scale=1.0">
+    
+  <link rel="icon" href="favicon.png" type="image/png">	
+    <link type= "text/css" href="{{ url_for('static',filename='styles/app-v1.css') }}" rel="stylesheet" media="all">
+    
+	<!--[if lt IE 9]><script src=javascripts/html5shiv-printshiv.js></script><![endif]-->
+   <script type="text/javascript" src="{{ url_for('static', filename='app-v1.js') }}"></script>
+ <style>
+ body {
+      background-color: white;
+      text-align: center;
+      min-width: 460px;
+    }
+    #timeline {
+      position: relative;
+      margin-top: 3ex;
+    }
+     
+    #diagram {
+      margin: 0 auto;
+      max-width: 600px;
+    }
+    #diagram2 {
+      margin: 0 auto;
+      max-width: 600px;
+    }
+    footer {
+      position: absolute;
+      bottom: 1ex;
+      right: 0;
+    }
+    @media all and (max-width: 600px) {
+      .year label {
+        padding: 8px 15px 5px;
+        font-size: 13px;
+      }
+      svg {
+        font-size: 15px;
+      }
+      text.region {
+        font-size: 16px;
+      }
+
+    }
+    @media all and (max-width: 580px) {
+      .year label {
+        font-size: 11px;
+      }
+    }
+    @media all and (max-width: 500px) {
+      .year label {
+        font-size: 9px;
+      }
+    }
+
+.left-div {
+  float:left;
+  height: 620px;
+  width: 750px;
+  
+}
+.right-div {
+  float:right;
+  height: 620px;
+  width: 750px;
+  
+}
+
+    #myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 20%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+  </style>
+
+
+</head>
+
+<body>
+<div class="timeline">
+<nav>   
+    <div id="timeline"></div>
+  </nav>
+<div class="left-div" style="border: thin solid black">  		
+     <h3><u>Diagram showing migration for all regions</u></h3>
+    <div id="diagram"></div>
+ </div> 		
+
+<div class="right-div"style="border: thin solid black">  		
+    <nav>
+    <p>                                                                    
+                                                                            </p>
+
+    <h3><u>Diagram showing migration in and out of Africa between 2010-2015</u></h3>   
+    
+  </nav>    
+    <div id="diagram2"></div>
+ </div>
+
+<script>
+      function init(){
+         d3.select("#MyInput")
+         .on("click", function(d,i) {
+            
+            return document.getElementById("num").value
+        })
+}  	
+</script>
+
+<script>
+(function ChartDraw()  {
+       
+      var data = "http://127.0.0.1:5000/get-data";
+      var aLittleBit = Math.PI / 100000;
+      
+      d3.json(data, function(data) {
+        var now = 2005;
+          var i=0;
+        var j=0;
+        for (var i=0; i<data.matrix[2005].length;i++){
+    for (var j=0; j<137;j++){
+    if (((data.matrix[2005][i][j])<=0)){
+        (data.matrix[2005][i][j])=0;
+        //console.log(data.matrix[2005]);        
+    }
+    }
+}
+       for (var i=0; i<data.matrix[1995].length;i++){
+    for (var j=0; j<137;j++){
+    if (((data.matrix[1995][i][j])<=0)){
+        (data.matrix[1995][i][j])=0;
+        //console.log((inputval.value))        
+    }
+    }
+}
+       for (var i=0; i<data.matrix[1990].length;i++){
+    for (var j=0; j<137;j++){
+    if (((data.matrix[1990][i][j])<=0)){
+        (data.matrix[1990][i][j])=0;
+        //console.log((inputval.value))        
+    }
+    }
+}
+      for (var i=0; i<data.matrix[2000].length;i++){
+    for (var j=0; j<137;j++){
+    if (((data.matrix[2000][i][j])<=0)){
+        (data.matrix[2000][i][j])=0;
+        //console.log((inputval.value))        
+    }
+    }
+
+}
+//kbn 2019/03/11 End 
+        var chart = Globalmigration.chart(data, {
+          element: '#diagram',
+          now: now,
+          animationDuration: 500,
+          margin: 125,
+          arcPadding: 0.04,
+          layout: {
+            alpha: 0,
+            threshold: 50000,
+            labelThreshold: 5000,
+            colors: 'cd3d08 ec8f00 6dae29 683f92 b60275 2058a5 00a592 009d3c 378974 ffca00'.split(' ').map(function(c) { return '#' + c; })
+          }
+        });
+
+        Globalmigration.timeline(chart, {
+          now: now,
+          element: '#timeline',
+          incr: 5
+        });
+
+        chart.draw(now);
+      });
+    })();
+
+    var _gaq=[['_setAccount','UA-42659946-1'],['_trackPageview']];(function(a,b){var c=a.createElement(b),d=a.getElementsByTagName(b)[0];c.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";d.parentNode.insertBefore(c,d)})(document,"script");
+</script>
+
+<script>
+(function ChartDraw()  {
+       
+      var data = "http://127.0.0.1:5000/get-Africa-Data";
+      var aLittleBit = Math.PI / 100000;
+      
+      d3.json(data, function(data) {
+        var now = 2010;
+          var i=0;
+        var j=0;
+
+       
+
+
+//kbn 2019/03/11 End 
+        var chart = Globalmigration.chart(data, {
+          element: '#diagram2',
+          now: now,
+          animationDuration: 500,
+          margin: 125,
+          arcPadding: 0.04,
+          layout: {
+            alpha: 0,
+            threshold: 50000,
+            labelThreshold: 5000,
+            colors: 'cd3d08 ec8f00 6dae29 683f92 b60275 2058a5 00a592 009d3c 378974 ffca00'.split(' ').map(function(c) { return '#' + c; })
+          }
+        });
+
+        Globalmigration.timeline(chart, {
+          now: now,
+          element: '#timeline2',
+          incr: 5
+        });
+
+        chart.draw(now);
+      });
+    })();
+
+    var _gaq=[['_setAccount','UA-42659946-1'],['_trackPageview']];(function(a,b){var c=a.createElement(b),d=a.getElementsByTagName(b)[0];c.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";d.parentNode.insertBefore(c,d)})(document,"script");
+</script>
+
+
+
+</body>
+</html>
