@@ -7,7 +7,7 @@ import json
 
 
 
-app= Flask(__name__)
+application= Flask(__name__)
 
 class DataStore():
     CountryName=None
